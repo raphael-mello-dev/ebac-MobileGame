@@ -1,16 +1,16 @@
 using System;
 using UnityEngine;
 
-public class Obstacle : MonoBehaviour
+public class EndLine : MonoBehaviour
 {
-    public static event Action OnGameOver;
+    public static event Action OnGameWon;
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerController>().CanMove = false;
-            OnGameOver?.Invoke();
+            OnGameWon?.Invoke();
         }
     }
 }

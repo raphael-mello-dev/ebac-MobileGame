@@ -3,14 +3,19 @@ using UnityEngine;
 public class UIStartEnd : MonoBehaviour
 {
     [SerializeField] private GameObject startPanel;
-    [SerializeField] private GameObject endPanel;
+    [SerializeField] private GameObject wonPanel;
+    [SerializeField] private GameObject lostPanel;
     
     [SerializeField] private GameObject player;
     private Vector3 playerStartPos;
 
+    [SerializeField] private GameObject coinsParent;
+
     private void OnEnable()
     {
         Obstacle.OnGameOver += GameOver;
+        EndLine.OnGameWon += GameWon;
+
         playerStartPos = player.transform.position;
     }
 
@@ -23,8 +28,15 @@ public class UIStartEnd : MonoBehaviour
     public void OnClickRestart()
     {
         player.transform.position = playerStartPos;
-        endPanel.SetActive(false);
+        wonPanel.SetActive(false);
+        lostPanel.SetActive(false);
         startPanel.SetActive(true);
+
+        for (int i = 0; i < coinsParent.transform.childCount; i++)
+        {
+            if (!coinsParent.transform.GetChild(i).gameObject.activeInHierarchy)
+                coinsParent.transform.GetChild(i).gameObject.SetActive(true);
+        }
     }
 
     public void OnClickQuit()
@@ -35,5 +47,7 @@ public class UIStartEnd : MonoBehaviour
             Application.Quit();
     }
 
-    public void GameOver() => endPanel.SetActive(true);
+    public void GameWon() => wonPanel.SetActive(true);
+
+    public void GameOver() => lostPanel.SetActive(true);
 }
