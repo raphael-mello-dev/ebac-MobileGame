@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public bool CanMove { get; set; }
+    public float SpeedIncrease { get; set; }
 
     private Vector2 mouseLastPos;
 
@@ -20,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
         GetMovementInput();
         
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        transform.Translate(Vector3.forward * (speed + SpeedIncrease) * Time.deltaTime);
     }
 
     void GetMovementInput()
