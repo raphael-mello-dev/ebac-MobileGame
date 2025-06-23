@@ -10,6 +10,7 @@ public abstract class PowerupBase: MonoBehaviour
     [SerializeField] protected TextMeshPro powerupText;
 
     public virtual void Start() => powerupText.text = powerupName;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
