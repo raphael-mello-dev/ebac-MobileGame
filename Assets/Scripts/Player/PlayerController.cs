@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public bool CanMove { get; set; }
+    public bool IsInvincible { get; set; }
     public float SpeedIncrease { get; set; }
 
     private Vector2 mouseLastPos;

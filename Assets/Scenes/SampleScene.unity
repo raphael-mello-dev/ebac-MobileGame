@@ -5029,6 +5029,7 @@ GameObject:
   - component: {fileID: 1906789429}
   - component: {fileID: 1906789428}
   - component: {fileID: 1906789427}
+  - component: {fileID: 1906789430}
   m_Layer: 0
   m_Name: InvinciblePowerup
   m_TagString: Untagged
@@ -5126,6 +5127,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1906789425}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1906789430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906789425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2621412fe18b79e49b418564d11b06d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerupName: Invincible Power
+  duration: 3
+  powerupText: {fileID: 251242407}
 --- !u!1001 &1907830623
 PrefabInstance:
   m_ObjectHideFlags: 0
