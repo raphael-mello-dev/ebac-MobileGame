@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
     public bool IsInvincible { get; set; }
     public float SpeedIncrease { get; set; }
 
+    [SerializeField] private Animator animator;
+
     private Vector2 mouseLastPos;
 
     [SerializeField] private float speed;
@@ -14,6 +16,18 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         mouseLastPos = Input.mousePosition;
+    }
+
+    private void OnEnable()
+    {
+        UIStartEnd.OnAnimChanged += ChangeAnim;
+        Obstacle.OnAnimChanged += ChangeAnim;
+    }
+
+    private void OnDisable()
+    {
+        UIStartEnd.OnAnimChanged -= ChangeAnim;
+        Obstacle.OnAnimChanged -= ChangeAnim;
     }
 
     void Update()
@@ -34,4 +48,6 @@ public class PlayerController : MonoBehaviour
     }
 
     void Movement(float axis) => transform.Translate(Vector3.right * axis * velocity * Time.deltaTime);
+
+    void ChangeAnim(int anim) => animator.SetInteger("Transition", anim);
 }

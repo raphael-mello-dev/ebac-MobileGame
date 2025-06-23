@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class InvinciblePowerup : PowerupBase
 {
-
     public override IEnumerator Powerup(GameObject player)
     {
         gameObject.GetComponent<MeshRenderer>().enabled = false;

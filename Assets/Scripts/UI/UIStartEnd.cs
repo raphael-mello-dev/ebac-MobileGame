@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class UIStartEnd : MonoBehaviour
@@ -11,6 +12,9 @@ public class UIStartEnd : MonoBehaviour
 
     [SerializeField] private GameObject coinsParent;
 
+    public static event Action<int> OnAnimChanged;
+    public static event Action OnTriggerReset;
+
     private void OnEnable()
     {
         Obstacle.OnGameOver += GameOver;
@@ -23,6 +27,7 @@ public class UIStartEnd : MonoBehaviour
     {
         startPanel.SetActive(false);
         player.GetComponent<PlayerController>().CanMove = true;
+        OnAnimChanged?.Invoke(1);
     }
 
     public void OnClickRestart()
@@ -31,6 +36,7 @@ public class UIStartEnd : MonoBehaviour
         wonPanel.SetActive(false);
         lostPanel.SetActive(false);
         startPanel.SetActive(true);
+        OnAnimChanged?.Invoke(0);
 
         for (int i = 0; i < coinsParent.transform.childCount; i++)
         {
@@ -47,7 +53,11 @@ public class UIStartEnd : MonoBehaviour
             Application.Quit();
     }
 
-    public void GameWon() => wonPanel.SetActive(true);
+    public void GameWon()
+    {
+        OnAnimChanged?.Invoke(0);
+        wonPanel.SetActive(true);
+    }
 
     public void GameOver() => lostPanel.SetActive(true);
 }
