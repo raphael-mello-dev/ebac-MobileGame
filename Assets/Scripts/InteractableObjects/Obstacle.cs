@@ -10,6 +10,7 @@ public class Obstacle : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && !other.gameObject.GetComponent<PlayerController>().IsInvincible)
         {
+            other.transform.position -= new Vector3(0, 0, 1f);
             other.gameObject.GetComponent<PlayerController>().CanMove = false;
             OnAnimChanged?.Invoke(2);
             OnGameOver?.Invoke();
