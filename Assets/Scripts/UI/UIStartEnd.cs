@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UIStartEnd : MonoBehaviour
@@ -9,8 +10,7 @@ public class UIStartEnd : MonoBehaviour
     
     [SerializeField] private GameObject player;
     private Vector3 playerStartPos;
-
-    [SerializeField] private GameObject coinsParent;
+    private List<GameObject> coinsParent = new List<GameObject>();
 
     public static event Action<int> OnAnimChanged;
     public static event Action OnTriggerReset;
@@ -21,6 +21,11 @@ public class UIStartEnd : MonoBehaviour
         EndLine.OnGameWon += GameWon;
 
         playerStartPos = player.transform.position;
+
+        GameObject[] parents = GameObject.FindGameObjectsWithTag("CoinsParent");
+
+        foreach (GameObject parent in parents)
+            coinsParent.Add(parent);
     }
 
     public void OnClickPlay()
@@ -38,10 +43,13 @@ public class UIStartEnd : MonoBehaviour
         startPanel.SetActive(true);
         OnAnimChanged?.Invoke(0);
 
-        for (int i = 0; i < coinsParent.transform.childCount; i++)
+        foreach(GameObject parent in coinsParent)
         {
-            if (!coinsParent.transform.GetChild(i).gameObject.activeInHierarchy)
-                coinsParent.transform.GetChild(i).gameObject.SetActive(true);
+            for (int i = 0; i < parent.transform.childCount; i++)
+            {
+                if (!parent.transform.GetChild(i).gameObject.activeInHierarchy)
+                    parent.transform.GetChild(i).gameObject.SetActive(true);
+            }
         }
     }
 
