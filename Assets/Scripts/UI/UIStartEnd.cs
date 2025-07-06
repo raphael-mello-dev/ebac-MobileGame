@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public class UIStartEnd : MonoBehaviour
 
     public static event Action<int> OnAnimChanged;
     public static event Action OnTriggerReset;
+    public static event Action OnGameStarted;
 
     private void OnEnable()
     {
@@ -31,8 +33,8 @@ public class UIStartEnd : MonoBehaviour
     public void OnClickPlay()
     {
         startPanel.SetActive(false);
-        player.GetComponent<PlayerController>().CanMove = true;
-        OnAnimChanged?.Invoke(1);
+        OnGameStarted?.Invoke();
+        StartCoroutine(GameStart());
     }
 
     public void OnClickRestart()
@@ -61,11 +63,24 @@ public class UIStartEnd : MonoBehaviour
             Application.Quit();
     }
 
+    private IEnumerator GameStart()
+    {
+        yield return new WaitForSecondsRealtime(LevelManager.startScaleDuration);
+        OnAnimChanged?.Invoke(1);
+    }
+
     public void GameWon()
     {
         OnAnimChanged?.Invoke(0);
         wonPanel.SetActive(true);
     }
 
-    public void GameOver() => lostPanel.SetActive(true);
+    public void GameOver() => StartCoroutine(GameEnd());
+
+    private IEnumerator GameEnd()
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+        player.transform.GetChild(player.transform.childCount - 1).localScale = Vector3.zero;
+        lostPanel.SetActive(true);
+    }
 }

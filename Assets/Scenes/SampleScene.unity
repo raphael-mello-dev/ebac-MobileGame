@@ -300,6 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Environment: {fileID: 1380994646}
+  playerReference: {fileID: 378406533}
   levelsPool:
   - {fileID: 7570614771726850574, guid: f5cd1cae03703dd4682170ae75967a4c, type: 3}
   - {fileID: 7661332408270040340, guid: df90cc7c4d7865844a91cf76ddcdedbf, type: 3}
@@ -314,6 +315,7 @@ MonoBehaviour:
   - {r: 0.3433962, g: 0.3433962, b: 0.3433962, a: 0}
   - {r: 0.435849, g: 1, b: 0.64590526, a: 0}
   - {r: 0.43529415, g: 0.8304134, b: 1, a: 0}
+  scaleDuration: 1.5
 --- !u!1 &284775164
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,6 +968,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 378406534}
     m_Modifications:
+    - target: {fileID: 5156129202013452133, guid: 89e20167823a30d459856414377997d1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156129202013452133, guid: 89e20167823a30d459856414377997d1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156129202013452133, guid: 89e20167823a30d459856414377997d1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5156129202013452133, guid: 89e20167823a30d459856414377997d1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
