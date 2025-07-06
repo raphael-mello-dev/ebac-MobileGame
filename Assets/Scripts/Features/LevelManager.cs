@@ -9,10 +9,11 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject Environment;
     [SerializeField] private GameObject playerReference;
     [SerializeField] private List<GameObject> levelsPool;
-
+    
     [Range(2, 10)]
     [SerializeField] private int levelSize;
 
+    int floorColorIndex, borderColorIndex;
     [SerializeField] Color[] colors;
 
     [SerializeField] private float scaleDuration;
@@ -24,17 +25,18 @@ public class LevelManager : MonoBehaviour
     private void OnEnable()
     {
         UIStartEnd.OnGameStarted += PlayerScaleCallBack;
+        UIStartEnd.OnGameStarted += LevelsColorChange;
     }
 
     private void OnDisable()
     {
         UIStartEnd.OnGameStarted -= PlayerScaleCallBack;
+        UIStartEnd.OnGameStarted -= LevelsColorChange;
     }
 
     private void Start()
     {
         int lastIndex = 0, currentIndex = 0;
-        int floorColorIndex, borderColorIndex;
         GameObject LevelPiece;
 
         floorColorIndex = Random.Range(0, colors.Length - 1);
@@ -42,7 +44,7 @@ public class LevelManager : MonoBehaviour
         do { borderColorIndex = Random.Range(0, colors.Length - 1); }
         while (floorColorIndex == borderColorIndex);
 
-        for (int i = 0; i < levelSize - 1; i++)
+        for (int i = 0; i < levelSize; i++)
         {
             while (lastIndex == currentIndex)
                 currentIndex = (int) Mathf.Floor(Random.Range(0, levelsPool.Count));
@@ -51,10 +53,6 @@ public class LevelManager : MonoBehaviour
                 LevelPiece = Instantiate(levelsPool[0], Environment.transform);
             else
                 LevelPiece = Instantiate(levelsPool[currentIndex], Environment.transform);
-            
-            LevelPiece.transform.GetChild(0).GetComponent<Renderer>().material.color = colors[floorColorIndex];
-            LevelPiece.transform.GetChild(1).GetComponent<Renderer>().material.color = colors[borderColorIndex];
-            LevelPiece.transform.GetChild(2).GetComponent<Renderer>().material.color = colors[borderColorIndex];
 
             if (i == levelSize - 2)
             {
@@ -65,7 +63,6 @@ public class LevelManager : MonoBehaviour
             LevelPiece.transform.position = new Vector3(LevelPiece.transform.position.x, LevelPiece.transform.position.y, 
                 LevelPiece.gameObject.transform.position.z + i * 169);
 
-            //LevelPiece.SetActive(false);
             lastIndex = currentIndex;
         }
     }
@@ -77,5 +74,15 @@ public class LevelManager : MonoBehaviour
         playerReference.transform.GetChild(playerReference.transform.childCount - 1).DOScale(1, scaleDuration);
         yield return new WaitForSecondsRealtime(scaleDuration);
         playerReference.GetComponent<PlayerController>().CanMove = true;
+    }
+
+    private void LevelsColorChange()
+    {
+        for (int i = 0; i < Environment.transform.childCount; i++)
+        {
+            Environment.transform.GetChild(i).transform.GetChild(0).GetComponent<Renderer>().material.DOColor(colors[floorColorIndex], 2f);
+            Environment.transform.GetChild(i).transform.GetChild(1).GetComponent<Renderer>().material.DOColor(colors[borderColorIndex], 2f);
+            Environment.transform.GetChild(i).transform.GetChild(2).GetComponent<Renderer>().material.DOColor(colors[borderColorIndex], 2f);
+        }
     }
 }
