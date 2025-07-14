@@ -32,6 +32,11 @@ public class UIStartEnd : MonoBehaviour
 
     public void OnClickPlay()
     {
+        GameObject[] coins = GameObject.FindGameObjectsWithTag("Coin");
+
+        foreach (GameObject coin in coins)
+            coin.transform.GetChild(0).gameObject.SetActive(true);
+
         startPanel.SetActive(false);
         OnGameStarted?.Invoke();
         StartCoroutine(GameStart());
@@ -79,7 +84,7 @@ public class UIStartEnd : MonoBehaviour
 
     private IEnumerator GameEnd()
     {
-        yield return new WaitForSecondsRealtime(1.5f);
+        yield return new WaitForSecondsRealtime(2f);
         player.transform.GetChild(player.transform.childCount - 1).localScale = Vector3.zero;
         lostPanel.SetActive(true);
     }

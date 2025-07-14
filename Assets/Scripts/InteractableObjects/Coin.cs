@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+    [SerializeField] private GameObject coinMesh;
+
     private Vector3 initialPos;
 
     private bool magnetOn;
 
     private GameObject target;
+
+    [SerializeField] private ParticleSystem collisionParticle;
 
     private void Awake() => initialPos = transform.position;
 
@@ -26,9 +30,12 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-       if (other.gameObject.CompareTag("Player"))
-            gameObject.SetActive(false);
-       else if (other.gameObject.CompareTag("Magnet"))
+        if (other.gameObject.CompareTag("Player"))
+        {
+            collisionParticle.Play();
+            coinMesh.SetActive(false);
+        }
+        else if (other.gameObject.CompareTag("Magnet"))
         {
             magnetOn = true;
             target = other.gameObject;

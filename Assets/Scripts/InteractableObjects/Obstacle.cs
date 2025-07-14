@@ -12,6 +12,7 @@ public class Obstacle : MonoBehaviour
         {
             other.transform.position -= new Vector3(0, 0, 1f);
             other.gameObject.GetComponent<PlayerController>().CanMove = false;
+            other.gameObject.GetComponent<PlayerController>().DeathParticle.Play();
             OnAnimChanged?.Invoke(2);
             OnGameOver?.Invoke();
         }

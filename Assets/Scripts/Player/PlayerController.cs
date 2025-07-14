@@ -13,6 +13,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float velocity;
 
+    [SerializeField] private ParticleSystem deathParticle;
+    public ParticleSystem DeathParticle { get; private set; }
+
+    private void Awake()
+    {
+        DeathParticle = deathParticle;
+    }
+
     void Start()
     {
         mouseLastPos = Input.mousePosition;
